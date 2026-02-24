@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista 4 - Prática de JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lista 4</h1>
+    <h2>Exemplos de Comandos JavaScript (Aula 02)</h2>
+
+    <div class="S1">
+        <h3>Script 1 - Ouvir Cliques na Página</h3>
+        <p>Este comando observa qualquer clique feito na janela do navegador e avisa no console.</p>
+        <script>
+            window.addEventListener("click", function() {
+                console.log("Você clicou em algum lugar da página!");
+            });
+        </script>
+    </div>
+
+    <div class="S2">
+        <h3>Script 2 - Clique em um Botão Específico</h3>
+        <button id="btnClick">Aperte Aqui</button>
+        <p>Diferente do anterior, este só reage quando você clica exatamente neste botão.</p>
+        <script>
+            var botaoS2 = document.querySelector("#btnClick");
+            botaoS2.addEventListener("click", function (event) {
+                console.log("Botão específico clicado!");
+                event.stopPropagation();
+            });
+        </script>
+    </div>
+
+    <div class="S3">
+        <h3>Script 3 - Executar Apenas uma Vez</h3>
+        <button id="btnOnce">Clique para Desativar</button>
+        <p>Este comando se auto-destrói após o primeiro uso, parando de funcionar.</p>
+        <script>
+            var botaoS3 = document.querySelector("#btnOnce");
+            function desligar(event) {
+                console.log("Ação executada e evento removido.");
+                botaoS3.removeEventListener("click", desligar);
+                event.stopPropagation();
+            }
+            botaoS3.addEventListener("click", desligar);
+        </script>
+    </div>
+
+    <div class="S4">
+        <h3>Script 4 - Identificar Botão do Mouse</h3>
+        <button id="btnMouse">Direito, Esquerdo ou Meio?</button>
+        <p>O JavaScript consegue descobrir qual dos botões do seu mouse você apertou.</p>
+        <script>
+            var btnMouse = document.querySelector("#btnMouse");
+            btnMouse.addEventListener("mousedown", function(event) {
+                if (event.which == 1) console.log("Botão Esquerdo");
+                else if (event.which == 2) console.log("Botão do Meio (Rodinha)");
+                else if (event.which == 3) console.log("Botão Direito");
+                event.stopPropagation();
+            });
+        </script>
+    </div>
+
+    <div class="S5">
+        <h3>Script 5 - Identificar o Alvo (Target)</h3>
+        <button class="btnABC">Botão A</button>
+        <button class="btnABC">Botão B</button>
+        <button class="btnABC">Botão C</button>
+        <p>O comando lê o texto de dentro do botão que foi clicado para saber qual foi o alvo.</p>
+        <script>
+            document.addEventListener("click", function(event) {
+                if (event.target.className == "btnABC") {
+                    console.log("Você escolheu a opção: " + event.target.textContent);
+                    event.stopPropagation();
+                }
+            });
+        </script>
+    </div>
+
+    <div class="S6">
+        <h3>Script 6 - Bloquear Ações (preventDefault)</h3>
+        <a href="https://google.com" id="linkBloqueado">Tentar abrir o Google</a>
+        <p>Este comando impede que o link funcione, cancelando a ida para o site.</p>
+        <script>
+            var link = document.querySelector("#linkBloqueado");
+            link.addEventListener("click", function(event) {
+                console.log("O link foi bloqueado pelo script.");
+                event.preventDefault();
+            });
+        </script>
+    </div>
+
+    <div class="S7">
+        <h3>Script 7 - Cor com a Tecla V</h3>
+        <p>Segure a tecla "V" no teclado para pintar o fundo de roxo. Solte para limpar.</p>      
+        <script>
+            addEventListener("keydown", function(event) {
+                if (event.which == 86) document.body.style.backgroundColor = "purple";
+            });
+            addEventListener("keyup", function(event) {
+                if (event.which == 86) document.body.style.backgroundColor = "";
+            });
+        </script>
+    </div>
+
+    <div class="S8">
+        <h3>Script 8 - Atalho Ctrl + Espaço</h3>
+        <p>O computador avisa quando você aperta duas teclas específicas ao mesmo tempo.</p>
+        <script>
+            addEventListener("keydown" , function(event) {
+                if (event.keyCode == 32 && event.ctrlKey)
+                console.log("Atalho Ctrl+Espaço detectado!");
+            });
+        </script>
+    </div>
+
+    <div class="S9">
+        <h3>Script 9 - Ler o que você Digita</h3>
+        <p>Tudo o que for digitado enquanto a página estiver aberta aparecerá no console.</p>
+        <script>
+            addEventListener("keypress", function(event) {
+                console.log("Tecla digitada: " + String.fromCharCode(event.charCode));
+            });
+        </script>
+    </div>
+
+    <div class="S10">
+        <h3>Script 10 - Criar Pontos Onde Clicar</h3>
+        <p>Clique em qualquer lugar (mesmo nas áreas brancas) para desenhar um ponto azul.</p>
+        <script>
+            document.addEventListener("click", function(event) {
+                var ponto = document.createElement("div");
+                ponto.className = "dot";
+                ponto.style.left = (event.pageX - 4) + "px";
+                ponto.style.top = (event.pageY - 4) + "px";
+                document.body.appendChild(ponto);
+            });
+        </script>
+    </div>
+
+    <div class="S11">
+        <h3>Script 11 - Arrastar para Mudar o Tamanho</h3>
+        <div id="barra" style="width: 60px; height: 20px; background: orange; cursor: ew-resize;"></div>
+        <p>Clique e segure na barra laranja, movendo o mouse para esticá-la ou encolhê-la.</p>
+        <script>
+            var posX;
+            var barra = document.querySelector("#barra");
+            barra.addEventListener("mousedown", function(event) {
+                if (event.which == 1) {
+                    posX = event.pageX;
+                    addEventListener("mousemove", redimensionar);
+                    event.preventDefault();
+                }
+            });
+
+            function redimensionar(event) {
+                if (event.which != 1) {
+                    removeEventListener("mousemove", redimensionar);
+                } else {
+                    var diff = event.pageX - posX;
+                    var largura = Math.max(10, barra.offsetWidth + diff);
+                    barra.style.width = largura + "px";
+                    posX = event.pageX;
+                }
+            }
+        </script>
+    </div>
+
+    <div class="S12">
+        <h3>Script 12 - Efeito de Foco (Mouse)</h3>
+        <p id="textoFoco">Passe o mouse <strong>aqui dentro</strong> para mudar a cor do texto.</p>
+        <script>
+            var zonaFoco = document.querySelector("#textoFoco");
+            function conferirPosicao(node, target) {
+                for (; node != null; node = node.parentNode) {
+                    if (node == target) return true;
+                }
+            }
+            zonaFoco.addEventListener("mouseover", function(event) {
+                if (!conferirPosicao(event.relatedTarget, zonaFoco))
+                    zonaFoco.style.color = "red";
+            });
+            zonaFoco.addEventListener("mouseout", function(event) {
+                if (!conferirPosicao(event.relatedTarget, zonaFoco))
+                    zonaFoco.style.color = "";
+            });
+        </script>
+    </div>
+
+    <div class="S13">
+        <h3>Script 13 - Barra de Progresso do Scroll</h3>
+        <p>A barra no topo da tela mostra o quanto você já desceu na página.</p>
+        <div id="container-progresso" style="border: 1px solid blue; width: 100px; position: fixed; top: 10px; right: 10px; height: 12px;">
+            <div id="barra-cor" style="background: blue; height: 12px; width: 0%;"></div>
+        </div>
+        <script>
+            var progresso = document.querySelector("#barra-cor");
+            window.addEventListener("scroll", function() {
+                var alturaTotal = document.body.scrollHeight - window.innerHeight;
+                var lido = (window.pageYOffset / alturaTotal) * 100;
+                progresso.style.width = lido + "%";
+            });
+        </script>
+    </div>
+
+    <div class="S14">
+        <h3>Script 14 - Esperar um Tempo (Timer)</h3>
+        <div id="caixa-timer" style="padding: 10px; border: 1px solid #000; width: 220px;">
+            Aguardando comando...
+        </div>
+        <button id="btnTempo">Mudar Cor em 2 Segundos</button>
+        <script>
+            var bTempo = document.querySelector("#btnTempo");
+            var alvo = document.querySelector("#caixa-timer");
+            bTempo.addEventListener("click", function(event) {
+                alvo.style.background = "blue";
+                alvo.textContent = "Contando 2 segundos...";
+                setTimeout(function() {
+                    alvo.style.background = "yellow";
+                    alvo.textContent = "Tempo esgotado!";
+                }, 2000);
+                event.stopPropagation();
+            });
+        </script>
+    </div>
+</body>
+</html>

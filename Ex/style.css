@@ -1,0 +1,40 @@
+body {
+    min-height: 2500px;
+    background: beige;
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+div[class^="S"] {
+    border: 1px solid #999;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: blue;
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+#btnClick, #btnOnce, #btnMouse, .btnABC, #btnTempo {
+    padding: 10px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    display: block;
+}
+
+h3 {
+    margin-top: 0;
+    color: #222;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
